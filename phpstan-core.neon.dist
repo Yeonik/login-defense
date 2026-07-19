@@ -1,0 +1,9 @@
+parameters:
+    level: 6
+    paths:
+        - src/Core
+        - tests/Core
+    # Core-only analysis. Deliberately does NOT include larastan: the core CI job
+    # installs no framework at all, so this config must analyse the domain logic
+    # without any Laravel/Illuminate extension present. That it stays green here is
+    # part of the proof that Core/ stands alone.

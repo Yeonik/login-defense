@@ -1,0 +1,13 @@
+/vendor/
+composer.lock
+
+# Local-only project notes: employer references, owner identity, AI working
+# agreement — must never reach the public repository.
+CLAUDE.md
+brief-login-defense-package.md
+.phpunit.result.cache
+.phpunit.cache/
+.php-cs-fixer.cache
+/build/
+/.idea/
+/.vscode/

@@ -1,0 +1,68 @@
+{
+    "name": "yeonik/login-defense",
+    "description": "Progressive login protection for PHP: track failed attempts, escalate to a captcha challenge, then to a timed lockout. Framework-agnostic core, thin Laravel bridge.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "login",
+        "security",
+        "brute-force",
+        "captcha",
+        "rate-limiting",
+        "lockout",
+        "psr"
+    ],
+    "authors": [
+        {
+            "name": "Yeonik"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "psr/simple-cache": "^3.0",
+        "psr/event-dispatcher": "^1.0",
+        "psr/clock": "^1.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^2.0",
+        "psr/http-server-middleware": "^1.0",
+        "psr/http-server-handler": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "orchestra/testbench": "^10.0",
+        "larastan/larastan": "^3.0",
+        "phpstan/phpstan": "^2.0",
+        "laravel/pint": "^1.18",
+        "nyholm/psr7": "^1.8"
+    },
+    "suggest": {
+        "illuminate/support": "To use the Laravel bridge (service provider + middleware).",
+        "psr/http-client-implementation": "Required by the reCAPTCHA/hCaptcha verifiers (any PSR-18 client).",
+        "psr/http-factory-implementation": "Required by the reCAPTCHA/hCaptcha verifiers (any PSR-17 factory)."
+    },
+    "autoload": {
+        "psr-4": {
+            "LoginDefense\\Core\\": "src/Core/",
+            "LoginDefense\\Bridge\\Laravel\\": "src/Bridge/Laravel/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LoginDefense\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LoginDefense\\Bridge\\Laravel\\LoginDefenseServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

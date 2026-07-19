@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         failOnRisky="true"
+         failOnWarning="true"
+         cacheDirectory=".phpunit.cache">
+    <testsuites>
+        <!-- The core suite runs with no framework installed. It is the first thing a
+             reviewer should be able to see go green: proof the decision logic stands
+             on PSR interfaces alone. -->
+        <testsuite name="core">
+            <directory>tests/Core</directory>
+        </testsuite>
+        <testsuite name="bridge">
+            <directory>tests/Bridge</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
+</phpunit>

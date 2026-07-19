@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # The proof of the architecture: no framework is installed at all. The core
+  # suite, Pint and a larastan-free PHPStan all run against pure PHP + PSR.
+  core:
+    name: core (PHP ${{ matrix.php }}, no framework)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Remove framework dev dependencies
+        run: composer remove --dev --no-update orchestra/testbench larastan/larastan
+
+      # This is a library: no committed lock file, so CI resolves the real version
+      # ranges on every run.
+      - name: Install dependencies
+        run: composer update --no-interaction --prefer-dist
+
+      - name: Pint
+        run: vendor/bin/pint --test
+
+      - name: PHPStan (core only, no larastan)
+        run: vendor/bin/phpstan analyse -c phpstan-core.neon.dist
+
+      - name: Core test suite
+        run: vendor/bin/phpunit --testsuite=core
+
+      - name: Composer audit
+        run: composer audit
+
+  bridge:
+    name: bridge (PHP ${{ matrix.php }}, Laravel 12)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Install dependencies
+        run: composer update --no-interaction --prefer-dist
+
+      - name: Pint
+        run: vendor/bin/pint --test
+
+      - name: PHPStan (level 6, larastan)
+        run: vendor/bin/phpstan analyse
+
+      - name: Bridge test suite
+        run: vendor/bin/phpunit --testsuite=bridge
+
+      - name: Composer audit
+        run: composer audit

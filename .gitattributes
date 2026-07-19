@@ -1,0 +1,8 @@
+* text=auto eol=lf
+
+/tests export-ignore
+/.github export-ignore
+/phpunit.xml.dist export-ignore
+/phpstan.neon.dist export-ignore
+/phpstan-core.neon.dist export-ignore
+/pint.json export-ignore

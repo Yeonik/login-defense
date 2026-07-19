@@ -1,0 +1,10 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 6
+    paths:
+        - src
+        - tests
+    # No baseline and no @phpstan-ignore anywhere: a level-6 failure means a real
+    # type problem, so we fix the type rather than silence the tool.
