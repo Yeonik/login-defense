@@ -1,0 +1,18 @@
+version: 2
+
+updates:
+  # Composer dependencies. This is a library with no committed lock file, so these
+  # PRs move the declared ranges in composer.json when a range no longer resolves
+  # to a supported version.
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Pinned GitHub Actions in the CI workflow.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5

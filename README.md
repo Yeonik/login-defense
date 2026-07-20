@@ -1,5 +1,10 @@
 # login-defense
 
+[![CI](https://github.com/Yeonik/login-defense/actions/workflows/ci.yml/badge.svg)](https://github.com/Yeonik/login-defense/actions/workflows/ci.yml)
+[![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?logo=php&logoColor=white)](composer.json)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![PHPStan](https://img.shields.io/badge/PHPStan-level%206-2a5ea7.svg)](phpstan.neon.dist)
+
 Progressive login protection for PHP: track failed attempts, escalate to a
 captcha challenge, then to a timed lockout — with the escalation policy explicit,
 configurable and tested. Framework-agnostic core, thin Laravel bridge included.
