@@ -47,12 +47,27 @@ jobs:
         run: composer audit
 
   bridge:
-    name: bridge (PHP ${{ matrix.php }}, Laravel 12)
+    name: bridge (PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      # Explicit pairs rather than a cross product: each Laravel major has exactly
+      # one matching Testbench major (12 -> 10, 13 -> 11), so the pairing has to be
+      # pinned per cell instead of resolved by chance.
       matrix:
-        php: ['8.3', '8.4']
+        include:
+          - php: '8.3'
+            laravel: '12'
+            testbench: '^10.0'
+          - php: '8.4'
+            laravel: '12'
+            testbench: '^10.0'
+          - php: '8.3'
+            laravel: '13'
+            testbench: '^11.0'
+          - php: '8.4'
+            laravel: '13'
+            testbench: '^11.0'
     steps:
       - uses: actions/checkout@v7
 
@@ -61,6 +76,9 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: none
+
+      - name: Pin Testbench for Laravel ${{ matrix.laravel }}
+        run: composer require --dev --no-update "orchestra/testbench:${{ matrix.testbench }}"
 
       - name: Install dependencies
         run: composer update --no-interaction --prefer-dist

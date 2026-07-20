@@ -46,8 +46,10 @@ composer require yeonik/login-defense
 
 Requires PHP 8.3+. The core depends only on PSR interfaces
 (`simple-cache`, `event-dispatcher`, `clock`, `http-client`, `http-factory`,
-`http-server-middleware`). The Laravel bridge is auto-discovered when
-`illuminate/support` is present.
+`http-server-middleware`) — installing this package pulls in **no framework**.
+
+The optional Laravel bridge supports **Laravel 12 and 13**, both covered by CI,
+and is auto-discovered when `illuminate/support` is present.
 
 Publish the config (Laravel):
 
@@ -185,10 +187,13 @@ src/Bridge/Laravel/  thin adapter: service provider + middleware
 is a CI job that **installs no framework at all** and runs the core suite against
 it:
 
-| Job      | PHP        | Framework                     |
-| -------- | ---------- | ----------------------------- |
-| `core`   | 8.3, 8.4   | none installed                |
-| `bridge` | 8.3, 8.4   | Laravel 12 (Orchestra Testbench) |
+| Job      | PHP        | Framework                                |
+| -------- | ---------- | ---------------------------------------- |
+| `core`   | 8.3, 8.4   | none installed                           |
+| `bridge` | 8.3, 8.4   | Laravel 12 and 13 (Orchestra Testbench)  |
+
+The `bridge` job runs four cells — PHP 8.3/8.4 × Laravel 12/13 — with each Laravel
+major pinned to its matching Testbench major (12 → Testbench 10, 13 → Testbench 11).
 
 Every push runs `composer audit`, `pint --test`, `phpstan analyse` (level 6,
 larastan on the bridge, no baseline, no ignores) and both suites.
